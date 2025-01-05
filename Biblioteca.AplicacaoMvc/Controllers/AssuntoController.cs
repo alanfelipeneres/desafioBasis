@@ -15,8 +15,16 @@ namespace Biblioteca.AplicacaoMvc.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var assuntos = await _assuntoService.ObterAssuntosAsync();
-            return View(assuntos);
+            try
+            {
+                var assuntos = await _assuntoService.ObterAssuntosAsync();
+                return View(assuntos);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar carregar os assuntos. Tente novamente mais tarde.";
+                return View();
+            }
         }
 
         public async Task<IActionResult> Create()
@@ -27,8 +35,21 @@ namespace Biblioteca.AplicacaoMvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(AssuntoVM assunto)
         {
-            var novoAssunto = await _assuntoService.CriarAssuntoAsync(assunto);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await _assuntoService.CriarAssuntoAsync(assunto);
+                    return RedirectToAction("Index");
+                }
+
+                return View(assunto);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar criar o assunto. Tente novamente mais tarde.";
+                return View(assunto);
+            }
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -38,8 +59,16 @@ namespace Biblioteca.AplicacaoMvc.Controllers
                 return NotFound();
             }
 
-            var assunto = await _assuntoService.ObterAssuntoPorIdAsync(id.Value);
-            return View(assunto);
+            try
+            {
+                var assunto = await _assuntoService.ObterAssuntoPorIdAsync(id.Value);
+                return View(assunto);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar carregar o assunto. Tente novamente mais tarde.";
+                return RedirectToAction("Index");
+            }
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -49,15 +78,36 @@ namespace Biblioteca.AplicacaoMvc.Controllers
                 return NotFound();
             }
 
-            var assunto = await _assuntoService.ObterAssuntoPorIdAsync(id.Value);
-            return View(assunto);
+            try
+            {
+                var assunto = await _assuntoService.ObterAssuntoPorIdAsync(id.Value);
+                return View(assunto);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar carregar o assunto para edição. Tente novamente mais tarde.";
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(AssuntoVM assunto)
         {
-            var assuntoAlterado = await _assuntoService.EditarAssuntoAsync(assunto);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await _assuntoService.EditarAssuntoAsync(assunto);
+                    return RedirectToAction("Index");
+                }
+
+                return View(assunto);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar editar o assunto. Tente novamente mais tarde.";
+                return View(assunto);
+            }
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -67,15 +117,31 @@ namespace Biblioteca.AplicacaoMvc.Controllers
                 return NotFound();
             }
 
-            var assunto = await _assuntoService.ObterAssuntoPorIdAsync(id.Value);
-            return View(assunto);
+            try
+            {
+                var assunto = await _assuntoService.ObterAssuntoPorIdAsync(id.Value);
+                return View(assunto);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar carregar o assunto para exclusão. Tente novamente mais tarde.";
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(AssuntoVM assunto)
         {
-            await _assuntoService.ExcluirAssuntoAsync(assunto.CodAs.Value);
-            return RedirectToAction("Index");
+            try
+            {
+                await _assuntoService.ExcluirAssuntoAsync(assunto.CodAs.Value);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar excluir o assunto. Tente novamente mais tarde.";
+                return RedirectToAction("Index");
+            }
         }
     }
 }
