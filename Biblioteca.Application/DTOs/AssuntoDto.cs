@@ -13,7 +13,8 @@ namespace Biblioteca.Application.DTOs
         public int? CodAs { get; set; }
 
         [Required(ErrorMessage = "A Descrição é obrigatória")]
-        [MaxLength(20)]
+        [MaxLength(20, ErrorMessage = "A Descrição deve ter no máximo 20 caracteres")]
+        [MinLength(3, ErrorMessage = "A Descrição deve ter no mínimo 3 caracteres")]
         [DisplayName("Descrição")]
         public string Descricao { get; set; }
     }
