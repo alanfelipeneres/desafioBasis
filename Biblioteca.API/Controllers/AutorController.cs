@@ -19,70 +19,105 @@ namespace Biblioteca.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AutorDto>>> Get()
         {
-            var autores = await _autorService.GetAllAsync();
-            if (autores == null)
+            try
             {
-                return NotFound("Autor não encontrado");
-            }
+                var autores = await _autorService.GetAllAsync();
+                if (autores == null)
+                {
+                    return NotFound("Autor não encontrado");
+                }
 
-            return Ok(autores);
+                return Ok(autores);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<IEnumerable<AutorDto>>> Get(int id)
         {
-            var Autors = await _autorService.GetByIdAsync(id);
-            if (Autors == null)
+            try
             {
-                return NotFound("Autor não encontrado");
-            }
+                var Autors = await _autorService.GetByIdAsync(id);
+                if (Autors == null)
+                {
+                    return NotFound("Autor não encontrado");
+                }
 
-            return Ok(Autors);
+                return Ok(Autors);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] AutorDto AutorDto)
         {
-            if (AutorDto == null)
+            try
             {
-                return BadRequest("Dado inválido");
+                if (AutorDto == null)
+                {
+                    return BadRequest("Dado inválido");
+                }
+
+                var Autor = await _autorService.AddAsync(AutorDto);
+
+                return new CreatedAtRouteResult("", new { id = Autor.CodAu }, Autor);
             }
-
-            var Autor = await _autorService.AddAsync(AutorDto);
-
-            return new CreatedAtRouteResult("", new { id = Autor.CodAu }, Autor);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         public async Task<ActionResult> Put(int id, [FromBody] AutorDto AutorDto)
         {
-            if (id != AutorDto.CodAu)
+            try
             {
-                return BadRequest("Id's incompatíveis");
-            }
+                if (id != AutorDto.CodAu)
+                {
+                    return BadRequest("Id's incompatíveis");
+                }
 
-            if (AutorDto == null)
+                if (AutorDto == null)
+                {
+                    return BadRequest("Dado inválido");
+                }
+
+                await _autorService.UpdateAsync(AutorDto);
+
+                return Ok(AutorDto);
+            }
+            catch (Exception ex)
             {
-                return BadRequest("Dado inválido");
+                return BadRequest(ex.Message);
             }
-
-            await _autorService.UpdateAsync(AutorDto);
-
-            return Ok(AutorDto);
         }
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var category = await _autorService.GetByIdAsync(id);
-            if (category == null)
+            try
             {
-                return NotFound("Autor não encontrado");
+                var category = await _autorService.GetByIdAsync(id);
+                if (category == null)
+                {
+                    return NotFound("Autor não encontrado");
+                }
+
+                await _autorService.RemoveAsync(id);
+
+                return Ok(category);
             }
-
-            await _autorService.RemoveAsync(id);
-
-            return Ok(category);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

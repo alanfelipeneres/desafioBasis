@@ -19,70 +19,105 @@ namespace Biblioteca.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LivroDto>>> Get()
         {
-            var Livros = await _livroService.GetAllAsync();
-            if (Livros == null)
+            try
             {
-                return NotFound("Livro não encontrado");
-            }
+                var Livros = await _livroService.GetAllAsync();
+                if (Livros == null)
+                {
+                    return NotFound("Livro não encontrado");
+                }
 
-            return Ok(Livros);
+                return Ok(Livros);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<IEnumerable<LivroDto>>> Get(int id)
         {
-            var Livros = await _livroService.GetByIdAsync(id);
-            if (Livros == null)
+            try
             {
-                return NotFound("Livro não encontrado");
-            }
+                var Livros = await _livroService.GetByIdAsync(id);
+                if (Livros == null)
+                {
+                    return NotFound("Livro não encontrado");
+                }
 
-            return Ok(Livros);
+                return Ok(Livros);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] LivroDto LivroDto)
         {
-            if (LivroDto == null)
+            try
             {
-                return BadRequest("Dado inválido");
+                if (LivroDto == null)
+                {
+                    return BadRequest("Dado inválido");
+                }
+
+                var Livro = await _livroService.AddAsync(LivroDto);
+
+                return new CreatedAtRouteResult("", new { id = Livro.CodL }, Livro);
             }
-
-            var Livro = await _livroService.AddAsync(LivroDto);
-
-            return new CreatedAtRouteResult("", new { id = Livro.CodL }, Livro);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         public async Task<ActionResult> Put(int id, [FromBody] LivroDto LivroDto)
         {
-            if (id != LivroDto.CodL)
+            try
             {
-                return BadRequest("Id's incompatíveis");
-            }
+                if (id != LivroDto.CodL)
+                {
+                    return BadRequest("Id's incompatíveis");
+                }
 
-            if (LivroDto == null)
+                if (LivroDto == null)
+                {
+                    return BadRequest("Dado inválido");
+                }
+
+                await _livroService.UpdateAsync(LivroDto);
+
+                return Ok(LivroDto);
+            }
+            catch (Exception ex)
             {
-                return BadRequest("Dado inválido");
+                return BadRequest(ex.Message);
             }
-
-            await _livroService.UpdateAsync(LivroDto);
-
-            return Ok(LivroDto);
         }
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var category = await _livroService.GetByIdAsync(id);
-            if (category == null)
+            try
             {
-                return NotFound("Livro não encontrado");
+                var category = await _livroService.GetByIdAsync(id);
+                if (category == null)
+                {
+                    return NotFound("Livro não encontrado");
+                }
+
+                await _livroService.RemoveAsync(id);
+
+                return Ok(category);
             }
-
-            await _livroService.RemoveAsync(id);
-
-            return Ok(category);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

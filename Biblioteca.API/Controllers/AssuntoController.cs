@@ -19,70 +19,106 @@ namespace Biblioteca.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AssuntoDto>>> Get()
         {
-            var assuntos = await _assuntoService.GetAllAsync();
-            if (assuntos == null)
+            try
             {
-                return NotFound("Assunto não encontrado");
-            }
+                var assuntos = await _assuntoService.GetAllAsync();
+                if (assuntos == null)
+                {
+                    return NotFound("Assunto não encontrado");
+                }
 
-            return Ok(assuntos);
+                return Ok(assuntos);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<IEnumerable<AssuntoDto>>> Get(int id)
         {
-            var assuntos = await _assuntoService.GetByIdAsync(id);
-            if (assuntos == null)
+            try
             {
-                return NotFound("Assunto não encontrado");
+                var assuntos = await _assuntoService.GetByIdAsync(id);
+                if (assuntos == null)
+                {
+                    return NotFound("Assunto não encontrado");
+                }
+
+                return Ok(assuntos);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
 
-            return Ok(assuntos);
         }
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] AssuntoDto assuntoDto)
         {
-            if (assuntoDto == null)
+            try
             {
-                return BadRequest("Dado inválido");
+                if (assuntoDto == null)
+                {
+                    return BadRequest("Dado inválido");
+                }
+
+                var assunto = await _assuntoService.AddAsync(assuntoDto);
+
+                return new CreatedAtRouteResult("", new { id = assunto.CodAs }, assunto);
             }
-
-            var assunto = await _assuntoService.AddAsync(assuntoDto);
-
-            return new CreatedAtRouteResult("", new { id = assunto.CodAs }, assunto);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         public async Task<ActionResult> Put(int id, [FromBody] AssuntoDto assuntoDto)
         {
-            if (id != assuntoDto.CodAs)
+            try
             {
-                return BadRequest("Id's incompatíveis");
-            }
+                if (id != assuntoDto.CodAs)
+                {
+                    return BadRequest("Id's incompatíveis");
+                }
 
-            if (assuntoDto == null)
+                if (assuntoDto == null)
+                {
+                    return BadRequest("Dado inválido");
+                }
+
+                await _assuntoService.UpdateAsync(assuntoDto);
+
+                return Ok(assuntoDto);
+            }
+            catch (Exception ex)
             {
-                return BadRequest("Dado inválido");
+                return BadRequest(ex.Message);
             }
-
-            await _assuntoService.UpdateAsync(assuntoDto);
-
-            return Ok(assuntoDto);
         }
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var category = await _assuntoService.GetByIdAsync(id);
-            if (category == null)
+            try
             {
-                return NotFound("Assunto não encontrado");
+                var category = await _assuntoService.GetByIdAsync(id);
+                if (category == null)
+                {
+                    return NotFound("Assunto não encontrado");
+                }
+
+                await _assuntoService.RemoveAsync(id);
+
+                return Ok(category);
             }
-
-            await _assuntoService.RemoveAsync(id);
-
-            return Ok(category);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
