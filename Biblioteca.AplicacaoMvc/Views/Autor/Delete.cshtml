@@ -1,0 +1,18 @@
+﻿@model Biblioteca.AplicacaoMvc.Models.AutorVM
+
+@{
+    ViewData["Title"] = "Excluir Autor";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Tem certeza de que deseja excluir este autor?</h3>
+<div>
+    <h4>Nome: @Model.Nome</h4>
+</div>
+
+<form method="post">
+    <input type="hidden" asp-for="CodAu" />
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a href="@Url.Action("Index", "Autor")" class="btn btn-secondary">Cancelar</a>
+</form>

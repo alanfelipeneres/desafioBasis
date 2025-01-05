@@ -15,7 +15,6 @@ namespace Biblioteca.Application.DTOs
         [Required(ErrorMessage = "O Nome é obrigatório")]
         [MaxLength(40, ErrorMessage = "O Nome deve ter no máximo 40 caracteres")]
         [MinLength(3, ErrorMessage = "O Nome deve ter no mínimo 3 caracteres")]
-        [RegularExpression(@"^[a-zA-ZÀ-ÿ\s]+$", ErrorMessage = "O Nome deve conter apenas letras e espaços")]
         public string Nome { get; set; }
     }
 }

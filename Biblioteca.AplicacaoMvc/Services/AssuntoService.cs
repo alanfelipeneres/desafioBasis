@@ -16,9 +16,9 @@ namespace Biblioteca.AplicacaoMvc.Services
             return await _apiClient.GetAsync<List<AssuntoVM>>("/assunto");
         }
 
-        public async Task<AssuntoVM> CriarAssuntoAsync(AssuntoVM livro)
+        public async Task<AssuntoVM> CriarAssuntoAsync(AssuntoVM assunto)
         {
-            return await _apiClient.PostAsync<AssuntoVM>("/assunto", livro);
+            return await _apiClient.PostAsync<AssuntoVM>("/assunto", assunto);
         }
 
         public async Task<AssuntoVM> ObterAssuntoPorIdAsync(int id)
@@ -26,9 +26,9 @@ namespace Biblioteca.AplicacaoMvc.Services
             return await _apiClient.GetAsync<AssuntoVM>($"/assunto/{id}");
         }
 
-        public async Task<AssuntoVM> EditarAssuntoAsync(AssuntoVM livro)
+        public async Task<AssuntoVM> EditarAssuntoAsync(AssuntoVM assunto)
         {
-            return await _apiClient.PutAsync<AssuntoVM>($"/assunto?id={livro.CodAs}", livro);
+            return await _apiClient.PutAsync<AssuntoVM>($"/assunto?id={assunto.CodAs}", assunto);
         }
 
         public async Task ExcluirAssuntoAsync(int id)

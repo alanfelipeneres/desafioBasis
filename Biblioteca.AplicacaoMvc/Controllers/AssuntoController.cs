@@ -8,9 +8,9 @@ namespace Biblioteca.AplicacaoMvc.Controllers
     {
         private readonly AssuntoService _assuntoService;
 
-        public AssuntoController(AssuntoService assuntoSercice)
+        public AssuntoController(AssuntoService assuntoService)
         {
-            _assuntoService = assuntoSercice;
+            _assuntoService = assuntoService;
         }
 
         public async Task<IActionResult> Index()

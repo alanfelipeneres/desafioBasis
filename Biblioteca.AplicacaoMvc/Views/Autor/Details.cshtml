@@ -1,0 +1,31 @@
+﻿@model Biblioteca.AplicacaoMvc.Models.AutorVM
+
+@{
+    ViewData["Title"] = "Detalhes do Autor";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>Autor</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Código do Autor</dt>
+        <dd class="col-sm-10">@Model.CodAu</dd>
+
+        <dt class="col-sm-2">Nome</dt>
+        <dd class="col-sm-10">@Model.Nome</dd>
+    </dl>
+</div>
+
+<div>
+    <!-- Botão de Edição -->
+    <a href="@Url.Action("Edit", "Autor", new { id = Model.CodAu })" class="btn btn-primary">Alterar</a>
+
+    <!-- Botão de Exclusão -->
+    <a href="@Url.Action("Delete", "Autor", new { id = Model.CodAu })" class="btn btn-danger">Excluir</a>
+</div>
+
+<div>
+    <a href="@Url.Action("Index", "Autor")">Voltar</a>
+</div>
