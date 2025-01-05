@@ -1,0 +1,31 @@
+﻿@model Biblioteca.AplicacaoMvc.Models.AssuntoVM
+
+@{
+    ViewData["Title"] = "Detalhes do Assunto";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>Assunto</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Código do Assunto</dt>
+        <dd class="col-sm-10">@Model.CodAs</dd>
+
+        <dt class="col-sm-2">Descrição</dt>
+        <dd class="col-sm-10">@Model.Descricao</dd>
+    </dl>
+</div>
+
+<div>
+    <!-- Botão de Edição -->
+    <a href="@Url.Action("Edit", "Assunto", new { id = Model.CodAs })" class="btn btn-primary">Alterar</a>
+
+    <!-- Botão de Exclusão -->
+    <a href="@Url.Action("Delete", "Assunto", new { id = Model.CodAs })" class="btn btn-danger">Excluir</a>
+</div>
+
+<div>
+    <a href="@Url.Action("Index", "Assunto")">Voltar</a>
+</div>

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Biblioteca.Infra.Ioc", "Bib
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Biblioteca.API", "Biblioteca.API\Biblioteca.API.csproj", "{C5A8A1E7-035F-453C-89CE-4BFAD9D0C860}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Biblioteca.Angular", "Biblioteca.Angular\Biblioteca.Angular.esproj", "{D5264782-317D-48E3-AC93-A9D91E46C30F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biblioteca.AplicacaoMvc", "Biblioteca.AplicacaoMvc\Biblioteca.AplicacaoMvc.csproj", "{CA7F3B7A-256A-4B97-ABCB-6E05AECEE545}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,12 +41,10 @@ Global
 		{C5A8A1E7-035F-453C-89CE-4BFAD9D0C860}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5A8A1E7-035F-453C-89CE-4BFAD9D0C860}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5A8A1E7-035F-453C-89CE-4BFAD9D0C860}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5264782-317D-48E3-AC93-A9D91E46C30F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5264782-317D-48E3-AC93-A9D91E46C30F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5264782-317D-48E3-AC93-A9D91E46C30F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{D5264782-317D-48E3-AC93-A9D91E46C30F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5264782-317D-48E3-AC93-A9D91E46C30F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5264782-317D-48E3-AC93-A9D91E46C30F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CA7F3B7A-256A-4B97-ABCB-6E05AECEE545}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA7F3B7A-256A-4B97-ABCB-6E05AECEE545}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA7F3B7A-256A-4B97-ABCB-6E05AECEE545}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA7F3B7A-256A-4B97-ABCB-6E05AECEE545}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
