@@ -20,7 +20,24 @@ namespace Biblioteca.Infra.Data.Repositories
 
         public async Task<T> CreateAsync(T entidade)
         {
-            await _context.Set<T>().AddAsync(entidade);
+            // Para garantir que o EF Core gerencie corretamente as entidades relacionadas
+            _context.Entry(entidade).State = EntityState.Added;
+
+            // Para entidades relacionadas (ex.: Autores ou Assuntos)
+            var navigationProperties = _context.Entry(entidade).Navigations;
+
+            foreach (var navigation in navigationProperties)
+            {
+                if (navigation.CurrentValue != null)
+                {
+                    foreach (var relatedEntity in (IEnumerable<object>)navigation.CurrentValue)
+                    {
+                        _context.Attach(relatedEntity);
+                    }
+                }
+            }
+
+            // Salva no banco de dados
             await _context.SaveChangesAsync();
             return entidade;
         }

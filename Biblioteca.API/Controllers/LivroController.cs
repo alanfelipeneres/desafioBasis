@@ -19,7 +19,7 @@ namespace Biblioteca.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LivroDto>>> Get()
         {
-            var Livros = await _livroService.GetAll();
+            var Livros = await _livroService.GetAllAsync();
             if (Livros == null)
             {
                 return NotFound("Livro não encontrado");
@@ -31,7 +31,7 @@ namespace Biblioteca.API.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<IEnumerable<LivroDto>>> Get(int id)
         {
-            var Livros = await _livroService.GetById(id);
+            var Livros = await _livroService.GetByIdAsync(id);
             if (Livros == null)
             {
                 return NotFound("Livro não encontrado");
@@ -48,7 +48,7 @@ namespace Biblioteca.API.Controllers
                 return BadRequest("Dado inválido");
             }
 
-            var Livro = await _livroService.Add(LivroDto);
+            var Livro = await _livroService.AddAsync(LivroDto);
 
             return new CreatedAtRouteResult("", new { id = Livro.CodL }, Livro);
         }
@@ -66,7 +66,7 @@ namespace Biblioteca.API.Controllers
                 return BadRequest("Dado inválido");
             }
 
-            await _livroService.Update(LivroDto);
+            await _livroService.UpdateAsync(LivroDto);
 
             return Ok(LivroDto);
         }
@@ -74,13 +74,13 @@ namespace Biblioteca.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var category = await _livroService.GetById(id);
+            var category = await _livroService.GetByIdAsync(id);
             if (category == null)
             {
                 return NotFound("Livro não encontrado");
             }
 
-            await _livroService.Remove(id);
+            await _livroService.RemoveAsync(id);
 
             return Ok(category);
         }

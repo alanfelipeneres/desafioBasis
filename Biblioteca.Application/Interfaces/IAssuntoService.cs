@@ -9,5 +9,6 @@ namespace Biblioteca.Application.Interfaces
 {
     public interface IAssuntoService : IService<AssuntoDto>
     {
+        Task<IEnumerable<AssuntoDto>> GetByIdsAsync(IEnumerable<int> ids);
     }
 }

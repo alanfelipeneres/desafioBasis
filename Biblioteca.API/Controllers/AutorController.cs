@@ -19,7 +19,7 @@ namespace Biblioteca.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AutorDto>>> Get()
         {
-            var autores = await _autorService.GetAll();
+            var autores = await _autorService.GetAllAsync();
             if (autores == null)
             {
                 return NotFound("Autor não encontrado");
@@ -31,7 +31,7 @@ namespace Biblioteca.API.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<IEnumerable<AutorDto>>> Get(int id)
         {
-            var Autors = await _autorService.GetById(id);
+            var Autors = await _autorService.GetByIdAsync(id);
             if (Autors == null)
             {
                 return NotFound("Autor não encontrado");
@@ -48,7 +48,7 @@ namespace Biblioteca.API.Controllers
                 return BadRequest("Dado inválido");
             }
 
-            var Autor = await _autorService.Add(AutorDto);
+            var Autor = await _autorService.AddAsync(AutorDto);
 
             return new CreatedAtRouteResult("", new { id = Autor.CodAu }, Autor);
         }
@@ -66,7 +66,7 @@ namespace Biblioteca.API.Controllers
                 return BadRequest("Dado inválido");
             }
 
-            await _autorService.Update(AutorDto);
+            await _autorService.UpdateAsync(AutorDto);
 
             return Ok(AutorDto);
         }
@@ -74,13 +74,13 @@ namespace Biblioteca.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var category = await _autorService.GetById(id);
+            var category = await _autorService.GetByIdAsync(id);
             if (category == null)
             {
                 return NotFound("Autor não encontrado");
             }
 
-            await _autorService.Remove(id);
+            await _autorService.RemoveAsync(id);
 
             return Ok(category);
         }

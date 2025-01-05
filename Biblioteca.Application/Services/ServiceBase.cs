@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Biblioteca.Application.DTOs;
 using Biblioteca.Application.Interfaces;
 using Biblioteca.Domain.Interfaces;
 using System;
@@ -22,25 +23,25 @@ namespace Biblioteca.Application.Services
             _mapper = mapper;
         }
 
-        public virtual async Task<TDto> Add(TDto dto)
+        public virtual async Task<TDto> AddAsync(TDto dto)
         {
             var entity = _mapper.Map<TEntity>(dto);
             return _mapper.Map<TDto>(await _repository.CreateAsync(entity));
         }
 
-        public virtual async Task<IEnumerable<TDto>> GetAll()
+        public virtual async Task<IEnumerable<TDto>> GetAllAsync()
         {
             var entities = await _repository.GetAllAsync();
             return _mapper.Map<IEnumerable<TDto>>(entities);
         }
 
-        public virtual async Task<TDto> GetById(int? id)
+        public virtual async Task<TDto> GetByIdAsync(int? id)
         {
             var entity = await _repository.GetByIdAsync(id);
             return _mapper.Map<TDto>(entity);
         }
 
-        public virtual async Task Remove(int? id)
+        public virtual async Task RemoveAsync(int? id)
         {
             var entity = await _repository.GetByIdAsync(id);
             if (entity != null)
@@ -49,7 +50,7 @@ namespace Biblioteca.Application.Services
             }
         }
 
-        public virtual async Task Update(TDto dto)
+        public virtual async Task UpdateAsync(TDto dto)
         {
             var entity = _mapper.Map<TEntity>(dto);
             await _repository.UpdateAsync(entity);

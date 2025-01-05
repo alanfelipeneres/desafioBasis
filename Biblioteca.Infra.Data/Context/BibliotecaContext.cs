@@ -21,23 +21,35 @@ namespace Biblioteca.Infra.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Relacionamento muitos-para-muitos entre Livro e Autor
+            // Relação muitos-para-muitos entre Livro e Autor
             modelBuilder.Entity<Livro>()
                 .HasMany(l => l.Autores)
                 .WithMany(a => a.Livros)
                 .UsingEntity<Dictionary<string, object>>(
-                    "Livro_Autor", // Nome da tabela associativa
-                    j => j.HasOne<Autor>().WithMany().HasForeignKey("AutorCodAu"),
-                    j => j.HasOne<Livro>().WithMany().HasForeignKey("LivroCodL"));
+                    "Livro_Autor",
+                    j => j.HasOne<Autor>()
+                          .WithMany()
+                          .HasForeignKey("Autor_CodAu")
+                          .HasConstraintName("FK_Livro_Autor_Autor"),
+                    j => j.HasOne<Livro>()
+                          .WithMany()
+                          .HasForeignKey("Livro_CodL")
+                          .HasConstraintName("FK_Livro_Autor_Livro"));
 
-            // Relacionamento muitos-para-muitos entre Livro e Assunto
+            // Relação muitos-para-muitos entre Livro e Assunto
             modelBuilder.Entity<Livro>()
                 .HasMany(l => l.Assuntos)
                 .WithMany(a => a.Livros)
                 .UsingEntity<Dictionary<string, object>>(
-                    "Livro_Assunto", // Nome da tabela associativa
-                    j => j.HasOne<Assunto>().WithMany().HasForeignKey("AssuntoCodAs"),
-                    j => j.HasOne<Livro>().WithMany().HasForeignKey("LivroCodL"));
+                    "Livro_Assunto",
+                    j => j.HasOne<Assunto>()
+                          .WithMany()
+                          .HasForeignKey("Assunto_CodAs")
+                          .HasConstraintName("FK_Livro_Assunto_Assunto"),
+                    j => j.HasOne<Livro>()
+                          .WithMany()
+                          .HasForeignKey("Livro_CodL")
+                          .HasConstraintName("FK_Livro_Assunto_Livro"));
         }
     }
 }

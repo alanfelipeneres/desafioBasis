@@ -13,9 +13,20 @@ namespace Biblioteca.Application.Services
 {
     public class AutorService : ServiceBase<AutorDto, Autor>, IAutorService
     {
+        private readonly IRepository<Autor> _repository;
+        private readonly IMapper _mapper;
+
         public AutorService(IRepository<Autor> repository, IMapper mapper)
             : base(repository, mapper)
         {
+            _repository = repository;
+            _mapper = mapper;
+        }
+
+        public async Task<IEnumerable<AutorDto>> GetByIdsAsync(IEnumerable<int> ids)
+        {
+            var autores = await _repository.GetAllAsync();
+            return _mapper.Map<IEnumerable<AutorDto>>(autores.Where(a => ids.Contains(a.CodAu)));
         }
     }
 }
