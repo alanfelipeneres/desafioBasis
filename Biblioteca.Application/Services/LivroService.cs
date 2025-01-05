@@ -13,22 +13,30 @@ namespace Biblioteca.Application.Services
 {
     public class LivroService : ServiceBase<LivroDto, Livro>, ILivroService
     {
-        private readonly IRepository<Livro> _repository;
-        private readonly IRepository<Autor> _repositoryAutor;
-        private readonly IRepository<Assunto> _repositoryAssunto;
+        private readonly ILivroRepository _livroRepository;
+        private readonly IAutorRepository _autorRepository;
+        private readonly IAssuntoRepository _assuntoRepository;
         private readonly IMapper _mapper;
         private readonly IAutorService _autorService;
         private readonly IAssuntoService _assuntoService;
 
-        public LivroService(IRepository<Livro> repository,
+        public LivroService(ILivroRepository livroRepository,
             IMapper mapper,
-            IRepository<Autor> repositoryAutor, 
-            IRepository<Assunto> repositoryAssunto) : base(repository, mapper)
+            IAutorRepository repositoryAutor,
+            IAssuntoRepository repositoryAssunto) : base(livroRepository, mapper)
         {
-            _repository = repository;
+            _livroRepository = livroRepository;
             _mapper = mapper;
-            _repositoryAutor = repositoryAutor;
-            _repositoryAssunto = repositoryAssunto;
+            _autorRepository = repositoryAutor;
+            _assuntoRepository = repositoryAssunto;
+        }
+
+        public override async Task<IEnumerable<LivroDto>> GetAllAsync()
+        {
+            var entities = await _livroRepository.GetAllAsync();
+
+
+            return _mapper.Map<IEnumerable<LivroDto>>(entities);
         }
 
         public override async Task<LivroDto> AddAsync(LivroDto livroDto)
@@ -44,7 +52,7 @@ namespace Biblioteca.Application.Services
                 foreach (var autorId in livroDto.AutoresIds)
                 {
                     // Busque a entidade Autor do banco de dados
-                    var autor = await _repositoryAutor.GetByIdAsync(autorId);
+                    var autor = await _autorRepository.GetByIdAsync(autorId);
 
                     if (autor != null)
                     {
@@ -62,7 +70,7 @@ namespace Biblioteca.Application.Services
                 foreach (var assuntoId in livroDto.AssuntosIds)
                 {
                     // Busque a entidade Assunto do banco de dados
-                    var assunto = await _repositoryAssunto.GetByIdAsync(assuntoId);
+                    var assunto = await _assuntoRepository.GetByIdAsync(assuntoId);
 
                     if (assunto != null)
                     {
@@ -73,7 +81,7 @@ namespace Biblioteca.Application.Services
             }
 
             // Salva o livro no banco de dados
-            await _repository.CreateAsync(livro);
+            await _livroRepository.CreateAsync(livro);
 
             // Retorna o livro salvo
             return _mapper.Map<LivroDto>(livro);

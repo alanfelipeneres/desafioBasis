@@ -13,10 +13,10 @@ namespace Biblioteca.Application.Services
 {
     public class AssuntoService : ServiceBase<AssuntoDto, Assunto>, IAssuntoService
     {
-        private readonly IRepository<Assunto> _repository;
+        private readonly IAssuntoRepository _repository;
         private readonly IMapper _mapper;
 
-        public AssuntoService(IRepository<Assunto> repository, IMapper mapper)
+        public AssuntoService(IAssuntoRepository repository, IMapper mapper)
             : base(repository, mapper)
         {
             _repository = repository;
