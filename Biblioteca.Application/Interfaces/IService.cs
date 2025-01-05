@@ -12,7 +12,7 @@ namespace Biblioteca.Application.Interfaces
         Task<IEnumerable<TDto>> GetAllAsync();
         Task<TDto> GetByIdAsync(int? id);
         Task<TDto> AddAsync(TDto dto);
-        Task UpdateAsync(TDto dto);
+        Task<TDto> UpdateAsync(TDto dto);
         Task RemoveAsync(int? id);
     }
 }

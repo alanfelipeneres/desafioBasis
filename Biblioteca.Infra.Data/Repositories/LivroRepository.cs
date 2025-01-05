@@ -15,6 +15,13 @@ namespace Biblioteca.Infra.Data.Repositories
         public LivroRepository(BibliotecaContext context) : base(context)
         {
         }
+
         public async Task<Livro> GetByIdWithRelationsAsync(int id)
+        {
+            return await _context.Livros
+                .Include(l => l.Autores)
+                .Include(l => l.Assuntos)
+                .FirstOrDefaultAsync(l => l.CodL == id);
+        }
     }
 }

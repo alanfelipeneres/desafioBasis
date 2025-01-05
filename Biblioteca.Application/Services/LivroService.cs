@@ -86,5 +86,62 @@ namespace Biblioteca.Application.Services
             // Retorna o livro salvo
             return _mapper.Map<LivroDto>(livro);
         }
+
+        public override async Task<LivroDto> UpdateAsync(LivroDto livroDto)
+        {
+            // Busca o livro existente no banco, incluindo as relações muitos-para-muitos
+            var livroExistente = await _livroRepository.GetByIdWithRelationsAsync(livroDto.CodL);
+
+            if (livroExistente == null)
+            {
+                throw new KeyNotFoundException("Livro não encontrado.");
+            }
+
+            // Atualiza os dados básicos do livro
+            livroExistente.Titulo = livroDto.Titulo;
+            livroExistente.Editora = livroDto.Editora;
+            livroExistente.Edicao = livroDto.Edicao;
+            livroExistente.AnoPublicacao = livroDto.AnoPublicacao;
+
+            // Atualiza os autores relacionados
+            if (livroDto.AutoresIds != null)
+            {
+                // Remove autores antigos
+                livroExistente.Autores.Clear();
+
+                // Adiciona os novos autores
+                foreach (var autorId in livroDto.AutoresIds)
+                {
+                    var autor = await _autorRepository.GetByIdAsync(autorId);
+                    if (autor != null)
+                    {
+                        livroExistente.Autores.Add(autor);
+                    }
+                }
+            }
+
+            // Atualiza os assuntos relacionados
+            if (livroDto.AssuntosIds != null)
+            {
+                // Remove assuntos antigos
+                livroExistente.Assuntos.Clear();
+
+                // Adiciona os novos assuntos
+                foreach (var assuntoId in livroDto.AssuntosIds)
+                {
+                    var assunto = await _assuntoRepository.GetByIdAsync(assuntoId);
+                    if (assunto != null)
+                    {
+                        livroExistente.Assuntos.Add(assunto);
+                    }
+                }
+            }
+
+            // Salva as alterações no banco de dados
+            await _livroRepository.UpdateAsync(livroExistente);
+
+            // Retorna o livro atualizado
+            return _mapper.Map<LivroDto>(livroExistente);
+        }
     }
 }

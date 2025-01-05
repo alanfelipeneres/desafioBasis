@@ -50,10 +50,10 @@ namespace Biblioteca.Application.Services
             }
         }
 
-        public virtual async Task UpdateAsync(TDto dto)
+        public virtual async Task<TDto> UpdateAsync(TDto dto)
         {
             var entity = _mapper.Map<TEntity>(dto);
-            await _repository.UpdateAsync(entity);
+            return _mapper.Map<TDto>(await _repository.UpdateAsync(entity));
         }
     }
 }

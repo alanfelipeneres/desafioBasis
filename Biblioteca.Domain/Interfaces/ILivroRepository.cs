@@ -9,5 +9,6 @@ namespace Biblioteca.Domain.Interfaces
 {
     public interface ILivroRepository : IRepository<Livro>
     {
+        Task<Livro> GetByIdWithRelationsAsync(int id);
     }
 }
