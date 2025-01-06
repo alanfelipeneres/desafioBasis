@@ -15,5 +15,12 @@ namespace Biblioteca.Infra.Data.Repositories
         public AutorRepository(BibliotecaContext context) : base(context)
         {
         }
+
+        public async Task<Autor> GetByIdWithRelationsAsync(int id)
+        {
+            return await _context.Autores
+                .Include(l => l.Livros)
+                .FirstOrDefaultAsync(l => l.CodAu == id);
+        }
     }
 }

@@ -28,5 +28,22 @@ namespace Biblioteca.Application.Services
             var autores = await _repository.GetAllAsync();
             return _mapper.Map<IEnumerable<AutorDto>>(autores.Where(a => ids.Contains(a.CodAu)));
         }
+
+        public override async Task RemoveAsync(int? id)
+        {
+            var entity = await _repository.GetByIdWithRelationsAsync(id.Value);
+
+            if (entity.Livros.Any())
+            {
+                throw new InvalidOperationException("Autor vinculado a um livro não pode ser excluído.");
+            }
+
+            if (entity != null)
+            {
+                await _repository.RemoveAsync(entity);
+            }
+        }
     }
+
+    
 }
