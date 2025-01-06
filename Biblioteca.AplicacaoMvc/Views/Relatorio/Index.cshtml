@@ -1,0 +1,33 @@
+﻿@* @using FastReport.Web
+@model WebReport
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Livros por Autor</title>
+</head>
+<body>
+    <h1>Relatório de Livros por Autor</h1>
+    @Html.Raw(Model.Report.Export)
+</body>
+</html>
+ *@
+
+@{
+    var reportHtml = ViewData["ReportHtml"] as string;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Livros por Autor</title>
+</head>
+<body>
+    <h1>Relatório de Livros por Autor</h1>
+
+    <!-- Exibe o conteúdo HTML gerado pelo FastReport -->
+    @Html.Raw(reportHtml)
+</body>
+</html>

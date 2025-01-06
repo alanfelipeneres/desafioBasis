@@ -10,6 +10,11 @@ builder.Services.AddSingleton<ApiClient>(provider => new ApiClient("https://loca
 builder.Services.AddTransient<AssuntoService>();
 builder.Services.AddTransient<AutorService>();
 builder.Services.AddTransient<LivroService>();
+builder.Services.AddTransient<RelatorioService>();
+
+// Configura o FastReport
+FastReport.Utils.RegisteredObjects.AddConnection(typeof(FastReport.Data.MsSqlDataConnection));
+
 
 var app = builder.Build();
 

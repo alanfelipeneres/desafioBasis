@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/06/2025 12:32:43" ReportInfo.Modified="01/06/2025 15:29:00" ReportInfo.CreatorVersion="2025.1.0.0">
+  <Dictionary>
+    <JsonDataSourceConnection Name="Connection" ConnectionString="rijcmlqbJsCNDUWD8zs7Fjc+Sa5CrQwfnlt5Mvv/ABmT+cnUQ4Oslhs+UFB+opDySQ1iQBhZ5BsLU1Qc99XHGEyiZgIEnDi27mj9XY1vjCpTO4MqTZxvpsWcm2h8bzobdiNnj5S8VnICCNVKbgFsT4ZBLX/BtgLf53akUyr64X+g4V2yzmRf1EG3cNdWOMKS7jJAgIg49NKYk1RzEep57xrH01VEBvqSEgCf+AIVJiaN366XQNVlAwuPK4nu6mCwO1oV1Apl+fmXXBpO10tMZnqcxPZrJNxNuJ316nsEU5sFMOoSZ+QrxvzBkTs0MLDE/5qgnqs6vsdRVm2/UruE/hiMn8pQkTpp8aZr2eKNf+BtiaiRfjZ2nxTtQq7yucAT5L05KB3hoHoy6qSzJ3qjavrij1hoQ==">
+      <JsonTableDataSource Name="JSON" DataType="FastReport.Utils.Json.JsonArray" Enabled="true" TableName="JSON" SimpleStructure="true">
+        <Column Name="autor" DataType="System.String"/>
+        <Column Name="livro" DataType="System.String"/>
+        <Column Name="edicao" DataType="System.Double"/>
+        <Column Name="anoPublicacao" DataType="System.String"/>
+        <Column Name="assuntos" DataType="System.String"/>
+      </JsonTableDataSource>
+    </JsonDataSourceConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8"/>
+    <PageHeaderBand Name="PageHeader1" Top="41.8" Width="718.2" Height="35.91">
+      <TableObject Name="Table2" Left="75.6" Width="529.2" Height="35.91">
+        <TableColumn Name="Column7" Width="105.84"/>
+        <TableColumn Name="Column8" Width="105.84"/>
+        <TableColumn Name="Column9" Width="105.84"/>
+        <TableColumn Name="Column10" Width="105.84"/>
+        <TableColumn Name="Column11" Width="105.84"/>
+        <TableRow Name="Row6" Height="35.91">
+          <TableCell Name="Cell31" Text="AUTOR" Font="Arial, 10pt"/>
+          <TableCell Name="Cell32" Text="LIVRO&#13;&#10;" Font="Arial, 10pt"/>
+          <TableCell Name="Cell33" Text="EDIÇÃO" Font="Arial, 10pt"/>
+          <TableCell Name="Cell34" Text="ANO PUBLICAÇÃO" Font="Arial, 10pt"/>
+          <TableCell Name="Cell35" Text="ASSUNTO" Font="Arial, 10pt"/>
+        </TableRow>
+      </TableObject>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="81.71" Width="718.2">
+      <DataBand Name="Data2" Top="85.71" Width="718.2" Height="75.6" DataSource="JSON">
+        <TableObject Name="Table1" Left="75.6" Top="9.45" Width="526.34" Height="64.26">
+          <TableColumn Name="Column1" Width="105.26"/>
+          <TableColumn Name="Column2" Width="105.27"/>
+          <TableColumn Name="Column3" Width="105.27"/>
+          <TableColumn Name="Column5" Width="105.27"/>
+          <TableColumn Name="Column6" Width="105.27"/>
+          <TableRow Name="Row1" Height="32.13">
+            <TableCell Name="Cell1" Text="[JSON.autor]" Font="Arial, 10pt"/>
+            <TableCell Name="Cell2" Text="[JSON.livro]" Font="Arial, 10pt"/>
+            <TableCell Name="Cell3" Text="[JSON.edicao]" Font="Arial, 10pt"/>
+            <TableCell Name="Cell5" Text="[JSON.anoPublicacao]" Font="Arial, 10pt"/>
+            <TableCell Name="Cell26" Text="[JSON.assuntos]" Font="Arial, 10pt"/>
+          </TableRow>
+          <TableRow Name="Row5" Height="32.13">
+            <TableCell Name="Cell21" Font="Arial, 10pt"/>
+            <TableCell Name="Cell22" Font="Arial, 10pt"/>
+            <TableCell Name="Cell23" Font="Arial, 10pt"/>
+            <TableCell Name="Cell25" Font="Arial, 10pt"/>
+            <TableCell Name="Cell30" Font="Arial, 10pt"/>
+          </TableRow>
+        </TableObject>
+      </DataBand>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="165.31" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>
