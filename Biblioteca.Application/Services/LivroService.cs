@@ -41,6 +41,8 @@ namespace Biblioteca.Application.Services
 
         public override async Task<LivroDto> AddAsync(LivroDto livroDto)
         {
+            ValidarRegras(livroDto);
+
             // Mapeia o DTO para a entidade Livro
             var livro = _mapper.Map<Livro>(livroDto);
 
@@ -89,6 +91,8 @@ namespace Biblioteca.Application.Services
 
         public override async Task<LivroDto> UpdateAsync(LivroDto livroDto)
         {
+            ValidarRegras(livroDto);
+
             // Busca o livro existente no banco, incluindo as relações muitos-para-muitos
             var livroExistente = await _livroRepository.GetByIdWithRelationsAsync(livroDto.CodL);
 
@@ -154,5 +158,76 @@ namespace Biblioteca.Application.Services
 
             return livroDto;
         }
+
+        private static void ValidarRegras(LivroDto dto)
+        {
+            // Validação do Título
+            if (string.IsNullOrWhiteSpace(dto.Titulo))
+            {
+                throw new ArgumentException("O Título é obrigatório.");
+            }
+
+            if (dto.Titulo.Length < 3)
+            {
+                throw new ArgumentException("O Título deve ter no mínimo 3 caracteres.");
+            }
+
+            if (dto.Titulo.Length > 40)
+            {
+                throw new ArgumentException("O Título deve ter no máximo 40 caracteres.");
+            }
+
+            // Validação da Editora
+            if (string.IsNullOrWhiteSpace(dto.Editora))
+            {
+                throw new ArgumentException("A Editora é obrigatória.");
+            }
+
+            if (dto.Editora.Length < 3)
+            {
+                throw new ArgumentException("A Editora deve ter no mínimo 3 caracteres.");
+            }
+
+            if (dto.Editora.Length > 40)
+            {
+                throw new ArgumentException("A Editora deve ter no máximo 40 caracteres.");
+            }
+
+            // Validação da Edição
+            if (dto.Edicao < 1 || dto.Edicao > 100)
+            {
+                throw new ArgumentException("A Edição deve estar entre 1 e 100.");
+            }
+
+            // Validação do Ano de Publicação
+            if (string.IsNullOrWhiteSpace(dto.AnoPublicacao))
+            {
+                throw new ArgumentException("O Ano de Publicação é obrigatório.");
+            }
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(dto.AnoPublicacao, @"^\d{4}$"))
+            {
+                throw new ArgumentException("O Ano de Publicação deve ser um ano válido no formato 'YYYY'.");
+            }
+
+            int anoPublicacao = int.Parse(dto.AnoPublicacao);
+            if (anoPublicacao < 1900 || anoPublicacao > 2099)
+            {
+                throw new ArgumentException("O Ano de Publicação deve estar entre 1900 e 2099.");
+            }
+
+            // Validação dos Autores
+            if (dto.AutoresIds == null || !dto.AutoresIds.Any())
+            {
+                throw new ArgumentException("Ao menos um Autor deve ser informado.");
+            }
+
+            // Validação dos Assuntos
+            if (dto.AssuntosIds == null || !dto.AssuntosIds.Any())
+            {
+                throw new ArgumentException("Ao menos um Assunto deve ser informado.");
+            }
+        }
+
     }
 }

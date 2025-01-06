@@ -36,13 +36,13 @@ namespace Biblioteca.AplicacaoMvc.Controllers
         {
             try
             {
-                ViewBag.Autores = await _autorService.ObterAutoresAsync();
-                ViewBag.Assuntos = await _assuntoService.ObterAssuntosAsync();
+                await CarregarViewBagCreate();
                 return View();
             }
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
+                await CarregarViewBagCreate();
                 return View();
             }
         }
@@ -58,13 +58,13 @@ namespace Biblioteca.AplicacaoMvc.Controllers
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.Autores = await _autorService.ObterAutoresAsync();
-                ViewBag.Assuntos = await _assuntoService.ObterAssuntosAsync();
+                await CarregarViewBagCreate();
                 return View(livro);
             }
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
+                await CarregarViewBagCreate();
                 return View(livro);
             }
         }
@@ -85,19 +85,14 @@ namespace Biblioteca.AplicacaoMvc.Controllers
                     return NotFound();
                 }
 
-                // Obtenha os autores e assuntos
-                var autores = await _autorService.ObterAutoresAsync();
-                var assuntos = await _assuntoService.ObterAssuntosAsync();
-
-                // Armazene nas ViewBags para uso na View
-                ViewBag.Autores = autores.ToDictionary(a => a.CodAu, a => a.Nome);
-                ViewBag.Assuntos = assuntos.ToDictionary(a => a.CodAs, a => a.Descricao);
+                await CarregarViewBagDetails();
 
                 return View(livro);
             }
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
+                await CarregarViewBagDetails();
                 return RedirectToAction("Index");
             }
         }
@@ -112,25 +107,7 @@ namespace Biblioteca.AplicacaoMvc.Controllers
             try
             {
                 var livro = await _livroService.ObterLivroPorIdAsync(id.Value);
-                if (livro == null)
-                {
-                    return NotFound();
-                }
-
-                var autores = await _autorService.ObterAutoresAsync();
-                var assuntos = await _assuntoService.ObterAssuntosAsync();
-
-                ViewBag.Autores = autores.Select(a => new SelectListItem
-                {
-                    Value = a.CodAu.ToString(),
-                    Text = a.Nome
-                }).ToList();
-
-                ViewBag.Assuntos = assuntos.Select(a => new SelectListItem
-                {
-                    Value = a.CodAs.ToString(),
-                    Text = a.Descricao
-                }).ToList();
+                await CarregarViewBagEdit();
 
                 return View(livro);
             }
@@ -152,27 +129,14 @@ namespace Biblioteca.AplicacaoMvc.Controllers
                     return RedirectToAction("Index");
                 }
 
-                // Recarregar ViewBag caso o ModelState seja inválido
-                var autores = await _autorService.ObterAutoresAsync();
-                var assuntos = await _assuntoService.ObterAssuntosAsync();
-
-                ViewBag.Autores = autores.Select(a => new SelectListItem
-                {
-                    Value = a.CodAu.ToString(),
-                    Text = a.Nome
-                }).ToList();
-
-                ViewBag.Assuntos = assuntos.Select(a => new SelectListItem
-                {
-                    Value = a.CodAs.ToString(),
-                    Text = a.Descricao
-                }).ToList();
+                await CarregarViewBagEdit();
 
                 return View(livro);
             }
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
+                await CarregarViewBagEdit();
                 return View(livro);
             }
         }
@@ -209,6 +173,40 @@ namespace Biblioteca.AplicacaoMvc.Controllers
                 TempData["ErrorMessage"] = ex.Message;
                 return RedirectToAction("Index");
             }
+        }
+
+        private async Task CarregarViewBagCreate()
+        {
+            ViewBag.Autores = await _autorService.ObterAutoresAsync();
+            ViewBag.Assuntos = await _assuntoService.ObterAssuntosAsync();
+        }
+
+        private async Task CarregarViewBagEdit()
+        {
+            var autores = await _autorService.ObterAutoresAsync();
+            var assuntos = await _assuntoService.ObterAssuntosAsync();
+
+            ViewBag.Autores = autores.Select(a => new SelectListItem
+            {
+                Value = a.CodAu.ToString(),
+                Text = a.Nome
+            }).ToList();
+
+            ViewBag.Assuntos = assuntos.Select(a => new SelectListItem
+            {
+                Value = a.CodAs.ToString(),
+                Text = a.Descricao
+            }).ToList();
+        }
+        private async Task CarregarViewBagDetails()
+        {
+            // Obtenha os autores e assuntos
+            var autores = await _autorService.ObterAutoresAsync();
+            var assuntos = await _assuntoService.ObterAssuntosAsync();
+
+            // Armazene nas ViewBags para uso na View
+            ViewBag.Autores = autores.ToDictionary(a => a.CodAu, a => a.Nome);
+            ViewBag.Assuntos = assuntos.ToDictionary(a => a.CodAs, a => a.Descricao);
         }
     }
 }
