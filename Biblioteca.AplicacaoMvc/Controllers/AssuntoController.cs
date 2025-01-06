@@ -22,7 +22,7 @@ namespace Biblioteca.AplicacaoMvc.Controllers
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar carregar os assuntos. Tente novamente mais tarde.";
+                TempData["ErrorMessage"] = ex.Message;
                 return View();
             }
         }
@@ -47,7 +47,7 @@ namespace Biblioteca.AplicacaoMvc.Controllers
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar criar o assunto. Tente novamente mais tarde.";
+                TempData["ErrorMessage"] = ex.Message;
                 return View(assunto);
             }
         }
@@ -66,7 +66,7 @@ namespace Biblioteca.AplicacaoMvc.Controllers
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar carregar o assunto. Tente novamente mais tarde.";
+                TempData["ErrorMessage"] = ex.Message;
                 return RedirectToAction("Index");
             }
         }
@@ -85,7 +85,7 @@ namespace Biblioteca.AplicacaoMvc.Controllers
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar carregar o assunto para edição. Tente novamente mais tarde.";
+                TempData["ErrorMessage"] = ex.Message;
                 return RedirectToAction("Index");
             }
         }
@@ -105,7 +105,7 @@ namespace Biblioteca.AplicacaoMvc.Controllers
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar editar o assunto. Tente novamente mais tarde.";
+                TempData["ErrorMessage"] = ex.Message;
                 return View(assunto);
             }
         }
@@ -124,7 +124,7 @@ namespace Biblioteca.AplicacaoMvc.Controllers
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar carregar o assunto para exclusão. Tente novamente mais tarde.";
+                TempData["ErrorMessage"] = ex.Message;
                 return RedirectToAction("Index");
             }
         }
@@ -139,7 +139,7 @@ namespace Biblioteca.AplicacaoMvc.Controllers
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Ocorreu um erro ao tentar excluir o assunto. Tente novamente mais tarde.";
+                TempData["ErrorMessage"] = ex.Message;
                 return RedirectToAction("Index");
             }
         }
