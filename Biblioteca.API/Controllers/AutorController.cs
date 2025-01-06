@@ -40,13 +40,13 @@ namespace Biblioteca.API.Controllers
         {
             try
             {
-                var Autors = await _autorService.GetByIdAsync(id);
-                if (Autors == null)
+                var autor = await _autorService.GetByIdAsync(id);
+                if (autor == null)
                 {
                     return NotFound("Autor não encontrado");
                 }
 
-                return Ok(Autors);
+                return Ok(autor);
             }
             catch (Exception ex)
             {
@@ -55,16 +55,16 @@ namespace Biblioteca.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] AutorDto AutorDto)
+        public async Task<ActionResult> Post([FromBody] AutorDto autorDto)
         {
             try
             {
-                if (AutorDto == null)
+                if (autorDto == null)
                 {
                     return BadRequest("Dado inválido");
                 }
 
-                var Autor = await _autorService.AddAsync(AutorDto);
+                var Autor = await _autorService.AddAsync(autorDto);
 
                 return new CreatedAtRouteResult("", new { id = Autor.CodAu }, Autor);
             }
@@ -75,23 +75,23 @@ namespace Biblioteca.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put(int id, [FromBody] AutorDto AutorDto)
+        public async Task<ActionResult> Put(int id, [FromBody] AutorDto autorDto)
         {
             try
             {
-                if (id != AutorDto.CodAu)
+                if (id != autorDto.CodAu)
                 {
                     return BadRequest("Id's incompatíveis");
                 }
 
-                if (AutorDto == null)
+                if (autorDto == null)
                 {
                     return BadRequest("Dado inválido");
                 }
 
-                await _autorService.UpdateAsync(AutorDto);
+                await _autorService.UpdateAsync(autorDto);
 
-                return Ok(AutorDto);
+                return Ok(autorDto);
             }
             catch (Exception ex)
             {
@@ -104,15 +104,15 @@ namespace Biblioteca.API.Controllers
         {
             try
             {
-                var category = await _autorService.GetByIdAsync(id);
-                if (category == null)
+                var autor = await _autorService.GetByIdAsync(id);
+                if (autor == null)
                 {
                     return NotFound("Autor não encontrado");
                 }
 
                 await _autorService.RemoveAsync(id);
 
-                return Ok(category);
+                return Ok(autor);
             }
             catch (Exception ex)
             {

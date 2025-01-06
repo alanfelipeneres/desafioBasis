@@ -28,5 +28,20 @@ namespace Biblioteca.Application.Services
             var assuntos = await _repository.GetAllAsync();
             return _mapper.Map<IEnumerable<AssuntoDto>>(assuntos.Where(a => ids.Contains(a.CodAs)));
         }
+
+        public override async Task RemoveAsync(int? id)
+        {
+            var entity = await _repository.GetByIdWithRelationsAsync(id.Value);
+
+            if (entity.Livros.Any()) 
+            {
+                throw new InvalidOperationException("Assunto vinculado a um livro não pode ser excluído.");
+            }
+
+            if (entity != null)
+            {
+                await _repository.RemoveAsync(entity);
+            }
+        }
     }
 }

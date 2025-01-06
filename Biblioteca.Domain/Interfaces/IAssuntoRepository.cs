@@ -9,5 +9,6 @@ namespace Biblioteca.Domain.Interfaces
 {
     public interface IAssuntoRepository : IRepository<Assunto>
     {
+        Task<Assunto> GetByIdWithRelationsAsync(int id);
     }
 }

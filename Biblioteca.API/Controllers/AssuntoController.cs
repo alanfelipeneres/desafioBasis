@@ -105,15 +105,15 @@ namespace Biblioteca.API.Controllers
         {
             try
             {
-                var category = await _assuntoService.GetByIdAsync(id);
-                if (category == null)
+                var assunto = await _assuntoService.GetByIdAsync(id);
+                if (assunto == null)
                 {
                     return NotFound("Assunto não encontrado");
                 }
 
                 await _assuntoService.RemoveAsync(id);
 
-                return Ok(category);
+                return Ok(assunto);
             }
             catch (Exception ex)
             {
