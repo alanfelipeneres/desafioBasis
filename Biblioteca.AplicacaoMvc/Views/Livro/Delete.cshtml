@@ -1,0 +1,21 @@
+﻿@model Biblioteca.AplicacaoMvc.Models.LivroVM
+
+@{
+    ViewData["Title"] = "Excluir Livro";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Tem certeza de que deseja excluir este livro?</h3>
+<div>
+    <h4>Título: @Model.Titulo</h4>
+    <p><strong>Editora:</strong> @Model.Editora</p>
+    <p><strong>Edição:</strong> @Model.Edicao</p>
+    <p><strong>Ano de Publicação:</strong> @Model.AnoPublicacao</p>
+</div>
+
+<form method="post">
+    <input type="hidden" asp-for="CodL" />
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a href="@Url.Action("Index", "Livro")" class="btn btn-secondary">Cancelar</a>
+</form>

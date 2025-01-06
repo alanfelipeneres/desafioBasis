@@ -18,7 +18,22 @@ namespace Biblioteca.AplicacaoMvc.Services
 
         public async Task<LivroVM> CriarLivroAsync(LivroVM livro)
         {
-            return await _apiClient.PostAsync<LivroVM>("/livros", livro);
+            return await _apiClient.PostAsync<LivroVM>("/livro", livro);
+        }
+
+        public async Task<LivroVM> ObterLivroPorIdAsync(int id)
+        {
+            return await _apiClient.GetAsync<LivroVM>($"/livro/{id}");
+        }
+
+        public async Task<LivroVM> EditarLivroAsync(LivroVM livro)
+        {
+            return await _apiClient.PutAsync<LivroVM>($"/livro?id={livro.CodL}", livro);
+        }
+
+        public async Task ExcluirLivroAsync(int id)
+        {
+            await _apiClient.DeleteAsync<LivroVM>($"/livro/{id}");
         }
     }
 }

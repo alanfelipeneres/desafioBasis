@@ -1,0 +1,71 @@
+﻿@model Biblioteca.AplicacaoMvc.Models.LivroVM
+
+@{
+    ViewData["Title"] = "Detalhes do Livro";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="card mt-3">
+    <div class="card-header">
+        <h2 class="card-title">Detalhes do Livro</h2>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Título</dt>
+            <dd class="col-sm-9">@Model.Titulo</dd>
+
+            <dt class="col-sm-3">Editora</dt>
+            <dd class="col-sm-9">@Model.Editora</dd>
+
+            <dt class="col-sm-3">Edição</dt>
+            <dd class="col-sm-9">@Model.Edicao</dd>
+
+            <dt class="col-sm-3">Ano de Publicação</dt>
+            <dd class="col-sm-9">@Model.AnoPublicacao</dd>
+
+            <dt class="col-sm-3">Autores</dt>
+            <dd class="col-sm-9">
+                @if (Model.AutoresIds != null && Model.AutoresIds.Any())
+                {
+                    <ul>
+                        @foreach (var autorId in Model.AutoresIds)
+                        {
+                            <li>
+                                @ViewBag.Autores[autorId]
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <span>Não há autores associados.</span>
+                }
+            </dd>
+
+            <dt class="col-sm-3">Assuntos</dt>
+            <dd class="col-sm-9">
+                @if (Model.AssuntosIds != null && Model.AssuntosIds.Any())
+                {
+                    <ul>
+                        @foreach (var assuntoId in Model.AssuntosIds)
+                        {
+                            <li>
+                                @ViewBag.Assuntos[assuntoId]
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <span>Não há assuntos associados.</span>
+                }
+            </dd>
+        </dl>
+    </div>
+    <div class="card-footer text-end">
+        <a href="@Url.Action("Index", "Livro")" class="btn btn-secondary">Voltar</a>
+        <a asp-action="Edit" asp-route-id="@Model.CodL" class="btn btn-primary">Editar</a>
+        <a asp-action="Delete" asp-route-id="@Model.CodL" class="btn btn-danger">Excluir</a>
+    </div>
+</div>

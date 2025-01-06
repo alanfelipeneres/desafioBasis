@@ -143,5 +143,16 @@ namespace Biblioteca.Application.Services
             // Retorna o livro atualizado
             return _mapper.Map<LivroDto>(livroExistente);
         }
+
+        public async Task<LivroDto> GetByIdWithRelationsAsync(int id)
+        {
+            var livro = await _livroRepository.GetByIdWithRelationsAsync(id);
+            var livroDto = _mapper.Map<LivroDto>(livro);
+
+            livroDto.AutoresIds = livro.Autores.Select(x => x.CodAu).ToList();
+            livroDto.AssuntosIds = livro.Assuntos.Select(x => x.CodAs).ToList();
+
+            return livroDto;
+        }
     }
 }

@@ -21,13 +21,13 @@ namespace Biblioteca.API.Controllers
         {
             try
             {
-                var Livros = await _livroService.GetAllAsync();
-                if (Livros == null)
+                var livros = await _livroService.GetAllAsync();
+                if (livros == null)
                 {
                     return NotFound("Livro não encontrado");
                 }
 
-                return Ok(Livros);
+                return Ok(livros);
             }
             catch (Exception ex)
             {
@@ -40,13 +40,13 @@ namespace Biblioteca.API.Controllers
         {
             try
             {
-                var Livros = await _livroService.GetByIdAsync(id);
-                if (Livros == null)
+                var livros = await _livroService.GetByIdWithRelationsAsync(id);
+                if (livros == null)
                 {
                     return NotFound("Livro não encontrado");
                 }
 
-                return Ok(Livros);
+                return Ok(livros);
             }
             catch (Exception ex)
             {
@@ -55,16 +55,16 @@ namespace Biblioteca.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] LivroDto LivroDto)
+        public async Task<ActionResult> Post([FromBody] LivroDto livroDto)
         {
             try
             {
-                if (LivroDto == null)
+                if (livroDto == null)
                 {
                     return BadRequest("Dado inválido");
                 }
 
-                var Livro = await _livroService.AddAsync(LivroDto);
+                var Livro = await _livroService.AddAsync(livroDto);
 
                 return new CreatedAtRouteResult("", new { id = Livro.CodL }, Livro);
             }
@@ -75,23 +75,23 @@ namespace Biblioteca.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put(int id, [FromBody] LivroDto LivroDto)
+        public async Task<ActionResult> Put(int id, [FromBody] LivroDto livroDto)
         {
             try
             {
-                if (id != LivroDto.CodL)
+                if (id != livroDto.CodL)
                 {
                     return BadRequest("Id's incompatíveis");
                 }
 
-                if (LivroDto == null)
+                if (livroDto == null)
                 {
                     return BadRequest("Dado inválido");
                 }
 
-                await _livroService.UpdateAsync(LivroDto);
+                await _livroService.UpdateAsync(livroDto);
 
-                return Ok(LivroDto);
+                return Ok(livroDto);
             }
             catch (Exception ex)
             {
@@ -104,15 +104,15 @@ namespace Biblioteca.API.Controllers
         {
             try
             {
-                var category = await _livroService.GetByIdAsync(id);
-                if (category == null)
+                var livro = await _livroService.GetByIdAsync(id);
+                if (livro == null)
                 {
                     return NotFound("Livro não encontrado");
                 }
 
                 await _livroService.RemoveAsync(id);
 
-                return Ok(category);
+                return Ok(livro);
             }
             catch (Exception ex)
             {

@@ -10,5 +10,6 @@ namespace Biblioteca.Application.Interfaces
 {
     public interface ILivroService : IService<LivroDto>
     {
+        Task<LivroDto> GetByIdWithRelationsAsync(int id);
     }
 }

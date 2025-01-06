@@ -1,0 +1,53 @@
+﻿@model Biblioteca.AplicacaoMvc.Models.LivroVM
+
+@{
+    ViewData["Title"] = "Editar Livro";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="CodL" />
+    <div class="form-group">
+        <label asp-for="Titulo" class="control-label">Título</label>
+        <input asp-for="Titulo" class="form-control" />
+        <span asp-validation-for="Titulo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Editora" class="control-label">Editora</label>
+        <input asp-for="Editora" class="form-control" />
+        <span asp-validation-for="Editora" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Edicao" class="control-label">Edição</label>
+        <input asp-for="Edicao" class="form-control" type="number" />
+        <span asp-validation-for="Edicao" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AnoPublicacao" class="control-label">Ano de Publicação</label>
+        <input asp-for="AnoPublicacao" class="form-control" />
+        <span asp-validation-for="AnoPublicacao" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Autores" class="control-label">Autores</label>
+        <select asp-for="AutoresIds" asp-items="ViewBag.Autores" class="form-control" multiple>
+        </select>
+        <span class="form-text text-muted">Segure Ctrl (ou Cmd) para selecionar múltiplos autores.</span>
+        <span asp-validation-for="AutoresIds" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Assuntos" class="control-label">Assuntos</label>
+        <select asp-for="AssuntosIds" asp-items="ViewBag.Assuntos" class="form-control" multiple>
+        </select>
+        <span class="form-text text-muted">Segure Ctrl (ou Cmd) para selecionar múltiplos assuntos.</span>
+        <span asp-validation-for="AssuntosIds" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -1,0 +1,63 @@
+﻿@model Biblioteca.AplicacaoMvc.Models.LivroVM
+
+@{
+    ViewData["Title"] = "Adicionar Novo Livro";
+}
+
+<div class="container">
+    <h1 class="display-4 text-center">Adicionar Novo Livro</h1>
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="Titulo" class="form-label">Título</label>
+            <input asp-for="Titulo" class="form-control" />
+            <span asp-validation-for="Titulo" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Editora" class="form-label">Editora</label>
+            <input asp-for="Editora" class="form-control" />
+            <span asp-validation-for="Editora" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Edicao" class="form-label">Edição</label>
+            <input asp-for="Edicao" type="number" class="form-control" />
+            <span asp-validation-for="Edicao" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="AnoPublicacao" class="form-label">Ano de Publicação</label>
+            <input asp-for="AnoPublicacao" class="form-control" />
+            <span asp-validation-for="AnoPublicacao" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Autores</label>
+            <select asp-for="AutoresIds" class="form-select" multiple>
+                @foreach (var autor in (IEnumerable<Biblioteca.AplicacaoMvc.Models.AutorVM>)ViewBag.Autores)
+                {
+                    <option value="@autor.CodAu">@autor.Nome</option>
+                }
+            </select>
+            <span class="form-text text-muted">Segure Ctrl (ou Cmd) para selecionar múltiplos autores.</span>
+            <span asp-validation-for="AutoresIds" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Assuntos</label>
+            <select asp-for="AssuntosIds" class="form-select" multiple>
+                @foreach (var assunto in (IEnumerable<Biblioteca.AplicacaoMvc.Models.AssuntoVM>)ViewBag.Assuntos)
+                {
+                    <option value="@assunto.CodAs">@assunto.Descricao</option>
+                }
+            </select>
+            <span class="form-text text-muted">Segure Ctrl (ou Cmd) para selecionar múltiplos assuntos.</span>
+            <span asp-validation-for="AssuntosIds" class="text-danger"></span>
+        </div>
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> Salvar
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
