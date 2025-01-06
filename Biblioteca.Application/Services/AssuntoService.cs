@@ -41,7 +41,6 @@ namespace Biblioteca.Application.Services
 
         private static void ValidarRegras(AssuntoDto dto)
         {
-            // Validação das regras
             if (string.IsNullOrWhiteSpace(dto.Descricao))
             {
                 throw new ArgumentException("A Descrição é obrigatória.");

@@ -23,6 +23,22 @@ namespace Biblioteca.Application.Services
             _mapper = mapper;
         }
 
+        public override async Task<AutorDto> AddAsync(AutorDto autorDto)
+        {
+            ValidarRegras(autorDto);
+
+            var autor = _mapper.Map<Autor>(autorDto);
+            return _mapper.Map<AutorDto>(await _repository.CreateAsync(autor));
+        }
+
+        public override async Task<AutorDto> UpdateAsync(AutorDto autorDto)
+        {
+            ValidarRegras(autorDto);
+
+            var autor = _mapper.Map<Autor>(autorDto);
+            return _mapper.Map<AutorDto>(await _repository.UpdateAsync(autor));
+        }
+
         public async Task<IEnumerable<AutorDto>> GetByIdsAsync(IEnumerable<int> ids)
         {
             var autores = await _repository.GetAllAsync();
@@ -41,6 +57,24 @@ namespace Biblioteca.Application.Services
             if (entity != null)
             {
                 await _repository.RemoveAsync(entity);
+            }
+        }
+
+        private static void ValidarRegras(AutorDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Nome))
+            {
+                throw new ArgumentException("O Nome é obrigatório.");
+            }
+
+            if (dto.Nome.Length < 3)
+            {
+                throw new ArgumentException("O Nome deve ter no mínimo 3 caracteres.");
+            }
+
+            if (dto.Nome.Length > 40)
+            {
+                throw new ArgumentException("O Nome deve ter no máximo 40 caracteres.");
             }
         }
     }
