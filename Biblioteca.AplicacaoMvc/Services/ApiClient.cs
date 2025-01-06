@@ -18,7 +18,7 @@ namespace Biblioteca.AplicacaoMvc.Services
 
             if (!response.IsSuccessful)
             {
-                throw new ApplicationException($"Erro ao consumir API: {response.StatusCode} - {response.ErrorMessage}");
+                throw new ApplicationException(response.Content);
             }
 
             return response.Data;
@@ -33,7 +33,7 @@ namespace Biblioteca.AplicacaoMvc.Services
 
             if (!response.IsSuccessful)
             {
-                throw new ApplicationException($"Erro ao consumir API: {response.StatusCode} - {response.ErrorMessage}");
+                throw new ApplicationException(response.Content);
             }
 
             return response.Data;
@@ -48,7 +48,7 @@ namespace Biblioteca.AplicacaoMvc.Services
 
             if (!response.IsSuccessful)
             {
-                throw new ApplicationException($"Erro ao consumir API: {response.StatusCode} - {response.ErrorMessage}");
+                throw new ApplicationException(response.Content);
             }
 
             return response.Data;
@@ -61,7 +61,7 @@ namespace Biblioteca.AplicacaoMvc.Services
 
             if (!response.IsSuccessful)
             {
-                throw new ApplicationException($"Erro ao consumir API: {response.StatusCode} - {response.ErrorMessage}");
+                throw new ApplicationException(response.Content);
             }
         }
     }
