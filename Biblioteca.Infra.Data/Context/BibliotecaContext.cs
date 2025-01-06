@@ -18,6 +18,7 @@ namespace Biblioteca.Infra.Data.Context
         public DbSet<Autor> Autores { get; set; }
         public DbSet<Assunto> Assuntos { get; set; }
         public DbSet<Livro> Livros { get; set; }
+        public DbSet<ViewLivrosPorAutor> LivroPorAutor { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,6 +51,13 @@ namespace Biblioteca.Infra.Data.Context
                           .WithMany()
                           .HasForeignKey("Livro_CodL")
                           .HasConstraintName("FK_Livro_Assunto_Livro"));
+
+            // Configura o modelo para a view
+            modelBuilder.Entity<ViewLivrosPorAutor>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("vw_LivrosPorAutor");
+            });
         }
     }
 }

@@ -38,11 +38,13 @@ namespace Biblioteca.Infra.Ioc
             services.AddScoped<IAutorRepository, AutorRepository>();
             services.AddScoped<IAssuntoRepository, AssuntoRepository>();
             services.AddScoped<ILivroRepository, LivroRepository>();
+            services.AddScoped<IViewLivrosPorAutorRepository, ViewLivrosPorAutorRepository>();
 
             //Services
             services.AddScoped<IAutorService, AutorService>();
             services.AddScoped<IAssuntoService, AssuntoService>();
             services.AddScoped<ILivroService, LivroService>();
+            services.AddScoped<IViewLivrosPorAutorService, ViewLivrosPorAutorService>();
             
             services.AddAutoMapper(typeof(DomainToDtoMappingProfile));
 

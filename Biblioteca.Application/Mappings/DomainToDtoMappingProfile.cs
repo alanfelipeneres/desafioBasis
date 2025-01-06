@@ -15,6 +15,7 @@ namespace Biblioteca.Application.Mappings
             CreateMap<Assunto, AssuntoDto>().ReverseMap();
             CreateMap<Autor, AutorDto>().ReverseMap();
             CreateMap<Livro, LivroDto>().ReverseMap();
+            CreateMap<ViewLivrosPorAutor, ViewLivrosPorAutorDto>().ReverseMap();
         }
     }
 }
