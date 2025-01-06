@@ -23,6 +23,41 @@ namespace Biblioteca.Application.Services
             _mapper = mapper;
         }
 
+        public override async Task<AssuntoDto> AddAsync(AssuntoDto assuntoDto)
+        {
+            ValidarRegras(assuntoDto);
+
+            var assunto = _mapper.Map<Assunto>(assuntoDto);
+            return _mapper.Map<AssuntoDto>(await _repository.CreateAsync(assunto));
+        }
+
+        public override async Task<AssuntoDto> UpdateAsync(AssuntoDto assuntoDto)
+        {
+            ValidarRegras(assuntoDto);
+
+            var assunto = _mapper.Map<Assunto>(assuntoDto);
+            return _mapper.Map<AssuntoDto>(await _repository.UpdateAsync(assunto));
+        }
+
+        private static void ValidarRegras(AssuntoDto dto)
+        {
+            // Validação das regras
+            if (string.IsNullOrWhiteSpace(dto.Descricao))
+            {
+                throw new ArgumentException("A Descrição é obrigatória.");
+            }
+
+            if (dto.Descricao.Length < 3)
+            {
+                throw new ArgumentException("A Descrição deve ter no mínimo 3 caracteres.");
+            }
+
+            if (dto.Descricao.Length > 20)
+            {
+                throw new ArgumentException("A Descrição deve ter no máximo 20 caracteres.");
+            }
+        }
+
         public async Task<IEnumerable<AssuntoDto>> GetByIdsAsync(IEnumerable<int> ids)
         {
             var assuntos = await _repository.GetAllAsync();
